@@ -26833,13 +26833,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var url = '/api/posts';
 	module.exports = {
 	  getAll: function getAll() {
-	    return _ajax2.default.get('/posts');
+	    return _ajax2.default.get(url);
 	  },
 	  create: function create(data) {
 	    console.log('Creating a post with data:', data);
-	    return _ajax2.default.post('/create', data);
+	    return _ajax2.default.post(url, data);
 	  }
 	};
 
@@ -26856,6 +26857,8 @@
 	    console.log('get request to:', url);
 	    return fetch(url).then(function (res) {
 	      return res.json();
+	    }).then(function (res) {
+	      return JSON.parse(res);
 	    });
 	  },
 	  post: function post(url, data) {
@@ -26868,6 +26871,8 @@
 	      })
 	    }).then(function (res) {
 	      return res.json();
+	    }).then(function (res) {
+	      return JSON.parse(res);
 	    });
 	  }
 	};
