@@ -6,8 +6,8 @@ module.exports = {
   content: srcPath,
   entry: path.join(srcPath, 'js', 'client.jsx'),
   output: {
-    path: buildPath,
-    filename: 'bundle.js',
+    path: path.join(buildPath, 'js'),
+    filename: 'bundle.js'
   },
   module: {
     loaders: [

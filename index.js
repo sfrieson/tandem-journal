@@ -1,14 +1,16 @@
 var express = require('express');
-// var webpackMiddleware = require('webpack-dev-middleware');
-// var webpack = require('webpack');
-// var webpackConfig = require('./webpack.config.js');
+var bodyParser = require('body-parser');
 
 const app = express();
-// app.use(webpackMiddleware(webpack(webpackConfig), {publicPath: 'dist'}));
-app.use(express.static('dist'))
+app.use(bodyParser.json());
+app.use(express.static('dist'));
 
+app.post('/create', (req, res) => {
+  console.log('posting data', req.body);
+  res.send('success');
+});
 app.get('/', (req, res) => {
-  res.send("index");
+  res.send('index');
 });
 
 app.listen(3000, () => console.log('Listening on 3000'));
