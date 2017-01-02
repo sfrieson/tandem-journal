@@ -3,17 +3,18 @@
 module.exports = {
   get: function (url) {
     console.log('get request to:', url);
+    return fetch(url)
+    .then(res => res.json());
   },
   post: function (url, data) {
     console.log(`POST request to: ${url} with data:`, data);
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.text())
-    .then(console.log.bind(console));
+    .then(res => res.json())
   }
 };

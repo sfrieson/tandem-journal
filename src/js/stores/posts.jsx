@@ -1,8 +1,11 @@
 import Ajax from '../utils/ajax.jsx';
 
 module.exports = {
-  create: function (data) {
+  getAll: () => {
+    return Ajax.get('/posts');
+  },
+  create: data => {
     console.log('Creating a post with data:', data);
-    Ajax.post('/create', data);
+    return Ajax.post('/create', data);
   }
 };

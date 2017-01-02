@@ -26730,6 +26730,14 @@
 
 	var _bicycle2 = _interopRequireDefault(_bicycle);
 
+	var _posts = __webpack_require__(236);
+
+	var _posts2 = _interopRequireDefault(_posts);
+
+	var _reactRouter = __webpack_require__(179);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26744,10 +26752,22 @@
 	  function App() {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+	    _this.state = { posts: false };
+	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      _posts2.default.getAll().then(function (posts) {
+	        console.log(posts);_this2.setState({ posts: posts });
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -26763,7 +26783,39 @@
 	          null,
 	          'I\'m writing in ES6, and it\'s MERN! Finally! And on a new computer!!!'
 	        ),
-	        _react2.default.createElement(_bicycle2.default, null)
+	        _react2.default.createElement(_bicycle2.default, null),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '/#/post' },
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Make new post'
+	          )
+	        ),
+	        this.renderPosts()
+	      );
+	    }
+	  }, {
+	    key: 'renderPosts',
+	    value: function renderPosts() {
+	      if (!this.state.posts) return null;
+	      var posts = this.state.posts.map(function (post, i) {
+	        var d = new Date(parseInt(post.created_at));
+	        return _react2.default.createElement(
+	          'li',
+	          { key: i },
+	          d.toDateString(),
+	          ': ',
+	          post.name,
+	          ' - ',
+	          post.body
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'ul',
+	        { style: { textAlign: 'left' } },
+	        posts
 	      );
 	    }
 	  }]);
@@ -26816,27 +26868,38 @@
 	        'div',
 	        { className: 'page' },
 	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Daily Post'
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '/#/' },
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Home'
+	          )
+	        ),
+	        _react2.default.createElement(
 	          'form',
 	          { onSubmit: this.submit },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Evening Post'
-	          ),
 	          _react2.default.createElement(
 	            'fieldset',
 	            null,
 	            'Who is posting?',
 	            _react2.default.createElement('br', null),
-	            _react2.default.createElement('input', { onChange: this.inputChange, type: 'radio', name: 'user', value: 'Amy' }),
+	            _react2.default.createElement('input', { onChange: this.inputChange, type: 'radio', name: 'user', value: '1' }),
 	            ' Amy',
 	            _react2.default.createElement('br', null),
-	            _react2.default.createElement('input', { onChange: this.inputChange, type: 'radio', name: 'user', value: 'Steven' }),
+	            _react2.default.createElement('input', { onChange: this.inputChange, type: 'radio', name: 'user', value: '2' }),
 	            ' Steven',
 	            _react2.default.createElement('br', null)
 	          ),
 	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('textArea', { name: 'post', onChange: this.inputChange }),
+	          'Summarize today...',
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('textArea', { name: 'post', style: { width: '100%' }, rows: 5, onChange: this.inputChange, value: this.state.results.post }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement('input', { type: 'submit' })
 	        )
@@ -26851,8 +26914,13 @@
 	  }, {
 	    key: 'submit',
 	    value: function submit(e) {
+	      var _this2 = this;
+
 	      e.preventDefault();
-	      _posts2.default.create(this.state.results);
+	      _posts2.default.create(this.state.results).then(function (res) {
+	        _this2.state.results.post = '';
+	        _this2.setState({ results: _this2.state.results });
+	      });
 	    }
 	  }]);
 
@@ -26874,9 +26942,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = {
+	  getAll: function getAll() {
+	    return _ajax2.default.get('/posts');
+	  },
 	  create: function create(data) {
 	    console.log('Creating a post with data:', data);
-	    _ajax2.default.post('/create', data);
+	    return _ajax2.default.post('/create', data);
 	  }
 	};
 
@@ -26891,18 +26962,21 @@
 	module.exports = {
 	  get: function get(url) {
 	    console.log('get request to:', url);
+	    return fetch(url).then(function (res) {
+	      return res.json();
+	    });
 	  },
 	  post: function post(url, data) {
 	    console.log('POST request to: ' + url + ' with data:', data);
-	    fetch(url, {
+	    return fetch(url, {
 	      method: 'POST',
 	      body: JSON.stringify(data),
 	      headers: new Headers({
 	        'Content-Type': 'application/json'
 	      })
 	    }).then(function (res) {
-	      return res.text();
-	    }).then(console.log.bind(console));
+	      return res.json();
+	    });
 	  }
 	};
 

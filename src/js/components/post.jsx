@@ -12,15 +12,21 @@ class Post extends React.Component {
   render () {
     return (
       <div className='page'>
+        <h1>Daily Post</h1>
+        <a href='/#/'>
+          <button>
+            Home
+          </button>
+        </a>
         <form onSubmit={this.submit}>
-          <h1>Evening Post</h1>
           <fieldset>
             Who is posting?<br />
-            <input onChange={this.inputChange} type='radio' name='user' value='Amy' /> Amy<br />
-            <input onChange={this.inputChange} type='radio' name='user' value='Steven' /> Steven<br />
+            <input onChange={this.inputChange} type='radio' name='user' value='1' /> Amy<br />
+            <input onChange={this.inputChange} type='radio' name='user' value='2' /> Steven<br />
           </fieldset>
           <br />
-          <textArea name='post' onChange={this.inputChange} /><br />
+          Summarize today...<br />
+          <textArea name='post' style={{width: '100%'}} rows={5} onChange={this.inputChange} value={this.state.results.post} /><br />
           <input type='submit' />
         </form>
       </div>
@@ -34,7 +40,11 @@ class Post extends React.Component {
 
   submit (e) {
     e.preventDefault();
-    Posts.create(this.state.results);
+    Posts.create(this.state.results)
+    .then(res => {
+      this.state.results.post = '';
+      this.setState({results: this.state.results});
+    });
   }
 }
 

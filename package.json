@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --watch",
-    "nodemon": "nodemon --watch dist"
+    "nodemon": "nodemon --watch dist --watch index.js"
   },
   "author": "Steven Frieson",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "body-parser": "^1.15.2",
     "body-parser-json": "^1.9.2",
     "express": "^4.14.0",
+    "pg": "^6.1.2",
     "react-router": "^3.0.0"
   },
   "devDependencies": {
