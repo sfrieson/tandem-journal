@@ -56,11 +56,11 @@
 
 	var _reactRouter = __webpack_require__(178);
 
-	var _app = __webpack_require__(233);
+	var _home = __webpack_require__(240);
 
-	var _app2 = _interopRequireDefault(_app);
+	var _home2 = _interopRequireDefault(_home);
 
-	var _post = __webpack_require__(237);
+	var _post = __webpack_require__(239);
 
 	var _post2 = _interopRequireDefault(_post);
 
@@ -70,7 +70,7 @@
 	  _reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.hashHistory },
-	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _app2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _home2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/post', component: _post2.default })
 	  ), document.getElementById('app'));
 	});
@@ -26394,113 +26394,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _bicycle = __webpack_require__(234);
-
-	var _bicycle2 = _interopRequireDefault(_bicycle);
-
-	var _posts = __webpack_require__(235);
-
-	var _posts2 = _interopRequireDefault(_posts);
-
-	var _reactRouter = __webpack_require__(178);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	module.exports = function (_React$Component) {
-	  _inherits(App, _React$Component);
-
-	  function App() {
-	    _classCallCheck(this, App);
-
-	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-
-	    _this.state = { posts: false };
-	    return _this;
-	  }
-
-	  _createClass(App, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
-
-	      _posts2.default.getAll().then(function (posts) {
-	        console.log(posts);_this2.setState({ posts: posts });
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'page' },
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Hello World!'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'I\'m writing in ES6, and it\'s PERN! Finally! And on a new computer!!!'
-	        ),
-	        _react2.default.createElement(_bicycle2.default, null),
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/post' },
-	          _react2.default.createElement(
-	            'button',
-	            null,
-	            'Make new post'
-	          )
-	        ),
-	        this.renderPosts()
-	      );
-	    }
-	  }, {
-	    key: 'renderPosts',
-	    value: function renderPosts() {
-	      if (!this.state.posts) return null;
-	      var posts = this.state.posts.map(function (post, i) {
-	        var d = new Date(parseInt(post.created_at));
-	        return _react2.default.createElement(
-	          'li',
-	          { key: i },
-	          d.toDateString(),
-	          ': ',
-	          post.name,
-	          ' - ',
-	          post.body
-	        );
-	      });
-	      return _react2.default.createElement(
-	        'ul',
-	        { style: { textAlign: 'left' } },
-	        posts
-	      );
-	    }
-	  }]);
-
-	  return App;
-	}(_react2.default.Component);
-
-/***/ },
+/* 233 */,
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26878,7 +26772,9 @@
 	};
 
 /***/ },
-/* 237 */
+/* 237 */,
+/* 238 */,
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26984,6 +26880,113 @@
 	}(_react2.default.Component);
 
 	module.exports = Post;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _bicycle = __webpack_require__(234);
+
+	var _bicycle2 = _interopRequireDefault(_bicycle);
+
+	var _posts = __webpack_require__(235);
+
+	var _posts2 = _interopRequireDefault(_posts);
+
+	var _reactRouter = __webpack_require__(178);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	module.exports = function (_React$Component) {
+	  _inherits(App, _React$Component);
+
+	  function App() {
+	    _classCallCheck(this, App);
+
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+	    _this.state = { posts: false };
+	    return _this;
+	  }
+
+	  _createClass(App, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      _posts2.default.getAll().then(function (posts) {
+	        console.log(posts);_this2.setState({ posts: posts });
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'page' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Hello World!'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'I\'m writing in ES6, and it\'s PERN! Finally! And on a new computer!!!'
+	        ),
+	        _react2.default.createElement(_bicycle2.default, null),
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/post' },
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Make new post'
+	          )
+	        ),
+	        this.renderPosts()
+	      );
+	    }
+	  }, {
+	    key: 'renderPosts',
+	    value: function renderPosts() {
+	      if (!this.state.posts) return null;
+	      var posts = this.state.posts.map(function (post, i) {
+	        var d = new Date(parseInt(post.created_at));
+	        return _react2.default.createElement(
+	          'li',
+	          { key: i },
+	          d.toDateString(),
+	          ': ',
+	          post.name,
+	          ' - ',
+	          post.body
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'ul',
+	        { style: { textAlign: 'left' } },
+	        posts
+	      );
+	    }
+	  }]);
+
+	  return App;
+	}(_react2.default.Component);
 
 /***/ }
 /******/ ]);

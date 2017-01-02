@@ -1,5 +1,5 @@
 import React from 'react';
-import Bicycle from './bicycle.jsx';
+import Bicycle from '../components/bicycle.jsx';
 import Posts from '../stores/posts.jsx';
 import {Link} from 'react-router';
 
