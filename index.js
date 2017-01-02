@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-var client = new pg.Client();
+var pg = new pg.Pool();
 
 const app = express();
 app.use(bodyParser.json());
@@ -9,35 +9,36 @@ app.use(express.static('dist'));
 
 app.post('/create', (req, res) => {
   console.log('posting data', req.body);
-  client.connect(err => {
-    if (err) return res.status(500).send(err);
-    var query = [
-      'INSERT INTO posts (account_id, body, created_at)',
-      'VALUES ($1, $2, $3)',
-      'RETURNING *;'
-    ].join(' ');
+  var query = [
+    'INSERT INTO posts (account_id, body, created_at)',
+    'VALUES ($1, $2, $3)',
+    'RETURNING *;'
+  ].join(' ');
+  var values = [req.body.user, req.body.post, Date.now()];
 
-    client.query(query, [req.body.user, req.body.post, Date.now()], (err, response) => {
+  pg.connect((err, client, done) => {
+    if (err) return res.status(500).send(err);
+    client.query(query, values, (err, result) => {
       if (err) return res.status(500).send(err);
-      console.log(response.rows[0]);
-      res.send(JSON.stringify(response.rows[0]));
-      client.end(err => { if (err) throw err; });
+      console.log(result.rows[0]);
+      res.send(JSON.stringify(result.rows[0]));
+      done();
     });
   });
 });
 app.get('/posts', (req, res) => {
-  client.connect(err => {
+  var query = [
+    'SELECT * FROM posts',
+    'INNER JOIN accounts ON (posts.account_id = accounts.id);'
+  ].join(' ');
+  pg.connect((err, client, done) => {
     if (err) return res.status(500).send(err);
-    var query = [
-      'SELECT * FROM posts',
-      'INNER JOIN accounts ON (posts.account_id = accounts.id);'
-    ].join(' ');
 
     client.query(query, (err, response) => {
-      if (err) return res.status(500).send(err);
+      if (err) { console.log('post query', err); return res.status(500).send(err); }
       console.log(response.rows);
       res.send(JSON.stringify(response.rows));
-      client.end(err => { if (err) throw err; });
+      done();
     });
   });
 });

@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --watch",
-    "nodemon": "nodemon --watch dist --watch index.js"
+    "nodemon": "nodemon --watch dist --watch index.js",
+    "db": "psql -a -f db/schemas.sql"
   },
   "author": "Steven Frieson",
   "license": "ISC",

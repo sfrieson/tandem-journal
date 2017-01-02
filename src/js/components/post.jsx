@@ -1,5 +1,6 @@
 import React from 'react';
 import Posts from '../stores/posts.jsx';
+import {Link} from 'react-router';
 
 class Post extends React.Component {
   constructor (props) {
@@ -13,11 +14,11 @@ class Post extends React.Component {
     return (
       <div className='page'>
         <h1>Daily Post</h1>
-        <a href='/#/'>
+        <Link to='/'>
           <button>
             Home
           </button>
-        </a>
+        </Link>
         <form onSubmit={this.submit}>
           <fieldset>
             Who is posting?<br />

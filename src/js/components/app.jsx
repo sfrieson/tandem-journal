@@ -1,7 +1,7 @@
 import React from 'react';
 import Bicycle from './bicycle.jsx';
 import Posts from '../stores/posts.jsx';
-import Link from 'react-router';
+import {Link} from 'react-router';
 
 module.exports = class App extends React.Component {
   constructor () {
@@ -17,14 +17,14 @@ module.exports = class App extends React.Component {
       <div className='page'>
         <h1>Hello World!</h1>
         <p>
-          I'm writing in ES6, and it's MERN! Finally! And on a new computer!!!
+          I'm writing in ES6, and it's PERN! Finally! And on a new computer!!!
         </p>
         <Bicycle />
-        <a href='/#/post'>
+        <Link to='/post'>
           <button>
             Make new post
           </button>
-        </a>
+        </Link>
         {this.renderPosts()}
       </div>
     );
