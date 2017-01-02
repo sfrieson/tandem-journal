@@ -2,6 +2,7 @@ import React from 'react';
 import Bicycle from '../components/bicycle.jsx';
 import Posts from '../stores/posts.jsx';
 import {Link} from 'react-router';
+import mo from 'moment';
 
 module.exports = class App extends React.Component {
   constructor () {
@@ -15,11 +16,12 @@ module.exports = class App extends React.Component {
   render () {
     return (
       <div className='page'>
-        <h1>Hello World!</h1>
+        <h1>Tandem Journal</h1>
         <p>
-          I'm writing in ES6, and it's PERN! Finally! And on a new computer!!!
+          A cute new place to journal with your significant other.
         </p>
         <Bicycle />
+        <h2>{mo().format('MMMM Do, YYYY')}</h2>
         <Link to='/post'>
           <button>
             Make new post
@@ -33,8 +35,7 @@ module.exports = class App extends React.Component {
   renderPosts () {
     if (!this.state.posts) return null;
     var posts = this.state.posts.map((post, i) => {
-      let d = new Date(parseInt(post.created_at));
-      return <li key={i}>{d.toDateString()}: {post.name} - {post.body}</li>;
+      return <li key={i}>{mo([post.year, post.month, post.day]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
     });
     return (
       <ul style={{textAlign: 'left'}}>

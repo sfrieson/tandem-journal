@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --watch",
     "nodemon": "nodemon --watch dist --watch backend",
-    "db": "psql -a -f db/schemas.sql"
+    "db": "psql -a -f backend/db/schemas.sql"
   },
   "author": "Steven Frieson",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "body-parser": "^1.15.2",
     "body-parser-json": "^1.9.2",
     "express": "^4.14.0",
+    "moment": "^2.17.1",
     "pg": "^6.1.2",
     "react-router": "^3.0.0"
   },
