@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo|Catamaran|Lobster');
+
+h1 {
+	color: #9A0033;
+	font-family: 'Lobster', cursive;
+	font-size: 90px;
+	margin: .25em;
+	margin-bottom: 80px;
+}
+h2 {
+	color: #151821;
+	font-family: 'Arvo', serif;
+	font-size: 36px;
+}
+h3 {
+	color: #151821;
+	font-family: 'Lobster', cursive;
+	font-size: 30px;
+}
+body {
+	background-color: #151821;
+	font-size: 20px;
+	font-family: 'Catamaran';
+	line-height: 1.8em;
+	color: #151821;
+}
+.page {
+	margin: 30px auto;
+	box-sizing: border-box;
+	background-color: beige;
+	text-align: center;
+	padding: 50px;
+	max-width: 1000px;
+}
+.wheel {
+	animation: spin 1s linear infinite;
+/* 	transform: rotate(0deg); */
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+}
+.pedal {
+	animation: spinFull 15s linear infinite;
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+}
+.tooth {
+	-webkit-transform-origin: 50% -800%;
+	-moz-transform-origin: 50% -800%;
+	-o-transform-origin: 50% -800%;
+	transform-origin: 50% -800%;
+}
+.tooth-0 { transform: rotate(0deg)}
+.tooth-1 { transform: rotate(18deg)}
+.tooth-2 { transform: rotate(36deg)}
+.tooth-3 { transform: rotate(54deg)}
+.tooth-4 { transform: rotate(72deg)}
+.tooth-5 { transform: rotate(90deg)}
+.tooth-6 { transform: rotate(108deg)}
+.tooth-7 { transform: rotate(126deg)}
+.tooth-8 { transform: rotate(144deg)}
+.tooth-9 { transform: rotate(162deg)}
+.tooth-10 { transform: rotate(180deg)}
+.tooth-11 { transform: rotate(198deg)}
+.tooth-12 { transform: rotate(216deg)}
+.tooth-13 { transform: rotate(234deg)}
+.tooth-14 { transform: rotate(252deg)}
+.tooth-15 { transform: rotate(270deg)}
+.tooth-16 { transform: rotate(288deg)}
+.tooth-17 { transform: rotate(306deg)}
+.tooth-18 { transform: rotate(324deg)}
+.tooth-19 { transform: rotate(342deg)}
+
+@keyframes spin {
+	0% {transform: rotateZ(0deg);}
+	100% {transform: rotateZ(18deg);}
+}
+@keyframes spinFull {
+	0% {transform: rotateZ(0deg);}
+	100% {transform: rotateZ(360deg);}
+}
+.bicycle {
+	max-width: 800px;
+}
+.bike {
+	animation: bounce .75s ease-in-out infinite;
+}
+
+@keyframes bounce {
+	50% {transform: translateY(1px)}
+}
+
+.shadow {
+	animation: spread .75s ease-in-out infinite;
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+}
+
+@keyframes spread {
+	50% {transform: scaleX(1.05); translateY(-50%);}
+}
