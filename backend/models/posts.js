@@ -2,6 +2,8 @@ var mo = require('moment');
 var pg = require('pg');
 pg = new pg.Pool();
 
+
+
 module.exports = {
   getAll: function () {
     var query = [
@@ -19,6 +21,10 @@ module.exports = {
         });
       });
     });
+  },
+  getLastYear: function (user) {
+    var today = mo();
+    return this.getDate(mo.year(), mo.month(), mo.day(), user);
   },
   getDate: function (yy, mm, dd, account) {
     account = account || false;
