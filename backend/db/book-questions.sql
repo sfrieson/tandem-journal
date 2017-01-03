@@ -1,4 +1,4 @@
-INSERT INTO questions (month, day, question) VALUES
+INSERT INTO questions (month, date, question) VALUES
 (0, 1, 'Love is...'),
 (0, 2, 'Make a New Year''s resolution.'),
 (0, 3, 'What feels vitally important right now?'),

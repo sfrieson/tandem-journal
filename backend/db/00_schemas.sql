@@ -13,7 +13,7 @@ CREATE TABLE posts (
   account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE NOT NULL,
   prompt VARCHAR (1),
   body TEXT,
-  day INTEGER,
+  date INTEGER,
   month INTEGER,
   year INTEGER
 );
@@ -22,6 +22,6 @@ CREATE TABLE posts (
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY,
   question TEXT,
-  day INTEGER,
+  date INTEGER,
   month INTEGER
 );

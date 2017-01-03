@@ -4,7 +4,7 @@
 -- (\d{4})\t(\d{1,2})\t(\d{1,2})\t([^\n]*$)
 -- ('y', 2, $1, $2, $3, '$4'),
 
-INSERT INTO posts (prompt, account_id, year, month, day, body) VALUES
+INSERT INTO posts (prompt, account_id, year, month, date, body) VALUES
 ('y', 2, 2016, 0, 1, 'Setting aside time for something you might not have time for. Sacrificing for it because you want to.'),
 ('y', 2, 2016, 0, 2, 'Be Younger! Deepen relationships with eachother and select others.'),
 ('y', 2, 2016, 0, 3, 'Finding an apartment we can love and really enjoy cooking in'),

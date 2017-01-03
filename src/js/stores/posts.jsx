@@ -4,8 +4,8 @@ module.exports = {
   getAll: () => {
     return Ajax.get(url);
   },
-  getLastYear: () => {
-    return Ajax.get(url + '/last-year');
+  getPastYears: () => {
+    return Ajax.get(url + '/past-years');
   },
   create: data => {
     console.log('Creating a post with data:', data);

@@ -26732,8 +26732,8 @@
 	  getAll: function getAll() {
 	    return _ajax2.default.get(url);
 	  },
-	  getLastYear: function getLastYear() {
-	    return _ajax2.default.get(url + '/last-year');
+	  getPastYears: function getPastYears() {
+	    return _ajax2.default.get(url + '/past-years');
 	  },
 	  create: function create(data) {
 	    console.log('Creating a post with data:', data);
