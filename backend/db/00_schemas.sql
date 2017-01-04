@@ -8,20 +8,20 @@ CREATE TABLE accounts (
 );
 INSERT INTO accounts (name) VALUES ('Amy'), ('Steven');
 
-CREATE TABLE posts (
-  id SERIAL PRIMARY KEY,
-  account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE NOT NULL,
-  prompt VARCHAR (1),
-  body TEXT,
-  date INTEGER,
-  month INTEGER,
-  year INTEGER
-);
-
-
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY,
   question TEXT,
   date INTEGER,
   month INTEGER
+);
+
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE NOT NULL,
+  question_id INTEGER,
+  body TEXT,
+  dayOfYear INTEGER,
+  date INTEGER,
+  month INTEGER,
+  year INTEGER
 );

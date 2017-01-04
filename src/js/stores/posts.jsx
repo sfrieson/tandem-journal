@@ -4,6 +4,9 @@ module.exports = {
   getAll: () => {
     return Ajax.get(url);
   },
+  getRecent: () => {
+    return Ajax.get(url + '/recent');
+  },
   getPastYears: () => {
     return Ajax.get(url + '/past-years');
   },

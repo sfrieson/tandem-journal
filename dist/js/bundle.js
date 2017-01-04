@@ -26732,6 +26732,9 @@
 	  getAll: function getAll() {
 	    return _ajax2.default.get(url);
 	  },
+	  getRecent: function getRecent() {
+	    return _ajax2.default.get(url + '/recent');
+	  },
 	  getPastYears: function getPastYears() {
 	    return _ajax2.default.get(url + '/past-years');
 	  },
@@ -26754,8 +26757,6 @@
 	    console.log('get request to:', url);
 	    return fetch(url).then(function (res) {
 	      return res.json();
-	    }).then(function (res) {
-	      return JSON.parse(res);
 	    });
 	  },
 	  post: function post(url, data) {
@@ -26768,8 +26769,6 @@
 	      })
 	    }).then(function (res) {
 	      return res.json();
-	    }).then(function (res) {
-	      return JSON.parse(res);
 	    });
 	  }
 	};
@@ -26926,18 +26925,20 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
-	    _this.state = { posts: false };
+	    _this.state = { years: false };
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var _this2 = this;
+	      _posts2.default.getPastYears().then(function (posts) {
+	        return { years: posts };
+	      }).then(this.setState.bind(this));
 
-	      _posts2.default.getAll().then(function (posts) {
-	        console.log(posts);_this2.setState({ posts: posts });
-	      });
+	      _posts2.default.getRecent().then(function (posts) {
+	        return { recent: posts };
+	      }).then(this.setState.bind(this));
 	    }
 	  }, {
 	    key: 'render',
@@ -26970,18 +26971,19 @@
 	            'Make new post'
 	          )
 	        ),
-	        this.renderPosts()
+	        this.renderPastYears(),
+	        this.renderRecent()
 	      );
 	    }
 	  }, {
-	    key: 'renderPosts',
-	    value: function renderPosts() {
-	      if (!this.state.posts) return null;
-	      var posts = this.state.posts.map(function (post, i) {
+	    key: 'renderPastYears',
+	    value: function renderPastYears() {
+	      if (!this.state.years) return null;
+	      var posts = this.state.years.map(function (post, i) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: i },
-	          (0, _moment2.default)([post.year, post.month, post.day]).format('MMMM Do, YYYY'),
+	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
 	          ': ',
 	          post.name,
 	          ' - ',
@@ -26989,9 +26991,48 @@
 	        );
 	      });
 	      return _react2.default.createElement(
-	        'ul',
-	        { style: { textAlign: 'left' } },
-	        posts
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Past Years'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { style: { textAlign: 'left' } },
+	          posts
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'renderRecent',
+	    value: function renderRecent() {
+	      if (!this.state.recent) return null;
+	      var posts = this.state.recent.map(function (post, i) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: i },
+	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
+	          ': ',
+	          post.name,
+	          ' - ',
+	          post.body
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Past Weeks'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { style: { textAlign: 'left' } },
+	          posts
+	        )
 	      );
 	    }
 	  }]);

@@ -2,19 +2,24 @@ var mo = require('moment');
 var pg = require('pg');
 pg = new pg.Pool();
 
+const SELECT = 'SELECT posts.year, posts.month, posts.date, name, body, question FROM posts';
 module.exports = {
-  getAll: function () {
+  getAll: function (limit) {
+    limit = limit || 50;
     var query = [
-      'SELECT * FROM posts',
-      'INNER JOIN accounts ON (posts.account_id = accounts.id)',
-      'ORDER BY year DESC, month DESC, day DESC, name ASC;'
-    ].join(' ');
+      SELECT,
+      'INNER JOIN accounts ON posts.account_id = accounts.id',
+      'FULL OUTER JOIN questions ON posts.question_id = questions.id',
+      'ORDER BY year DESC, month DESC, date DESC, name ASC',
+      'LIMIT ' + limit
+    ].join(' ') + ';';
+    console.log(query);
     return new Promise((resolve, reject) => {
       pg.connect((err, client, done) => {
         if (err) reject(err);
         client.query(query, (err, res) => {
           if (err) reject(err);
-          resolve(JSON.stringify(res.rows));
+          resolve(res.rows);
           done();
         });
       });
@@ -22,17 +27,28 @@ module.exports = {
   },
   getPastYears: function (user) {
     var today = mo();
-    return this.getDate({ month: today.month(), date: today.date()}, user);
+    return this.getDate({month: today.month(), date: today.date()}, user);
+  },
+  getRecent: function (num, user) {
+    // num = num || 2;
+    // var ago = mo().week(-num);
+
+    return this.getAll(28, user);
+
   },
   getDate: function (date, account) {
     account = account || false;
     var inputCount = 0;
     var query = [
-      'SELECT * FROM posts WHERE',
-      Object.keys(date).map(key => key + ' = $' + (++inputCount)).join(' AND '),
+      SELECT,
+      'INNER JOIN accounts ON (posts.account_id = accounts.id)',
+      'FULL OUTER JOIN questions ON posts.question_id = questions.id',
+      'WHERE ' +
+      Object.keys(date).map(key => 'posts.' + key + ' = $' + (++inputCount)).join(' AND '),
       account !== false ? 'AND account_id = $' + (++inputCount) : '',
-      ';'
-    ].join(' ');
+      'ORDER BY year DESC, month DESC, date DESC, name ASC'
+    ].join(' ') + ';';
+    console.log(query);
     var values = Object.keys(date)
     .reduce((values, key) => {
       values.push(date[key]);
@@ -41,13 +57,15 @@ module.exports = {
 
     if (account !== false) values.push(account);
 
+    console.log(query, values);
+
     return new Promise((resolve, reject) => {
       pg.connect((err, client, done) => {
         if (err) reject(err);
-        console.log(query, values);
         client.query(query, values, (err, res) => {
           if (err) reject(err);
-          resolve(JSON.stringify(res.rows));
+          console.log(res);
+          resolve(res.rows);
           done();
         });
       });

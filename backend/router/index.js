@@ -25,5 +25,10 @@ router.get('/api/posts/past-years', (req, res) => {
   .then(data => res.json(data))
   .catch(err => res.status(500).send(err));
 });
+router.get('/api/posts/recent', (req, res) => {
+  Posts.getRecent()
+  .then(data => res.json(data))
+  .catch(err => res.status(500).send(err));
+});
 
 module.exports = router;

@@ -7,11 +7,16 @@ import mo from 'moment';
 module.exports = class App extends React.Component {
   constructor () {
     super();
-    this.state = {posts: false};
+    this.state = {years: false};
   }
   componentWillMount () {
-    Posts.getAll()
-    .then(posts => { console.log(posts); this.setState({posts: posts}); });
+    Posts.getPastYears()
+    .then(posts => ({years: posts}))
+    .then(this.setState.bind(this));
+
+    Posts.getRecent()
+    .then(posts => ({recent: posts}))
+    .then(this.setState.bind(this));
   }
   render () {
     return (
@@ -27,20 +32,38 @@ module.exports = class App extends React.Component {
             Make new post
           </button>
         </Link>
-        {this.renderPosts()}
+        {this.renderPastYears()}
+        {this.renderRecent()}
       </div>
     );
   }
 
-  renderPosts () {
-    if (!this.state.posts) return null;
-    var posts = this.state.posts.map((post, i) => {
-      return <li key={i}>{mo([post.year, post.month, post.day]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
+  renderPastYears () {
+    if (!this.state.years) return null;
+    var posts = this.state.years.map((post, i) => {
+      return <li key={i}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
     });
     return (
-      <ul style={{textAlign: 'left'}}>
-        {posts}
-      </ul>
+      <div>
+        <h2>Past Years</h2>
+        <ul style={{textAlign: 'left'}}>
+          {posts}
+        </ul>
+      </div>
+    );
+  }
+  renderRecent () {
+    if (!this.state.recent) return null;
+    var posts = this.state.recent.map((post, i) => {
+      return <li key={i}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
+    });
+    return (
+      <div>
+        <h2>Past Weeks</h2>
+        <ul style={{textAlign: 'left'}}>
+          {posts}
+        </ul>
+      </div>
     );
   }
 };
