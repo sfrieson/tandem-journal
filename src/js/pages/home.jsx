@@ -40,9 +40,7 @@ module.exports = class App extends React.Component {
 
   renderPastYears () {
     if (!this.state.years) return null;
-    var posts = this.state.years.map((post, i) => {
-      return <li key={i}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
-    });
+    var posts = this.state.years.map(this.renderPost);
     return (
       <div>
         <h2>Past Years</h2>
@@ -54,9 +52,7 @@ module.exports = class App extends React.Component {
   }
   renderRecent () {
     if (!this.state.recent) return null;
-    var posts = this.state.recent.map((post, i) => {
-      return <li key={i}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}: {post.name} - {post.body}</li>;
-    });
+    var posts = this.state.recent.map(this.renderPost);
     return (
       <div>
         <h2>Past Weeks</h2>
@@ -64,6 +60,14 @@ module.exports = class App extends React.Component {
           {posts}
         </ul>
       </div>
+    );
+  }
+
+  renderPost (post, i) {
+    return (
+      <li key={i}>
+        <span style={{fontSize: '.8em'}}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}:</span> <b>{post.name}</b> - {post.body}
+      </li>
     );
   }
 };

@@ -26979,17 +26979,7 @@
 	    key: 'renderPastYears',
 	    value: function renderPastYears() {
 	      if (!this.state.years) return null;
-	      var posts = this.state.years.map(function (post, i) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: i },
-	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
-	          ': ',
-	          post.name,
-	          ' - ',
-	          post.body
-	        );
-	      });
+	      var posts = this.state.years.map(this.renderPost);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -27009,17 +26999,7 @@
 	    key: 'renderRecent',
 	    value: function renderRecent() {
 	      if (!this.state.recent) return null;
-	      var posts = this.state.recent.map(function (post, i) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: i },
-	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
-	          ': ',
-	          post.name,
-	          ' - ',
-	          post.body
-	        );
-	      });
+	      var posts = this.state.recent.map(this.renderPost);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -27033,6 +27013,28 @@
 	          { style: { textAlign: 'left' } },
 	          posts
 	        )
+	      );
+	    }
+	  }, {
+	    key: 'renderPost',
+	    value: function renderPost(post, i) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: i },
+	        _react2.default.createElement(
+	          'span',
+	          { style: { fontSize: '.8em' } },
+	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
+	          ':'
+	        ),
+	        ' ',
+	        _react2.default.createElement(
+	          'b',
+	          null,
+	          post.name
+	        ),
+	        ' - ',
+	        post.body
 	      );
 	    }
 	  }]);
