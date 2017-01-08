@@ -1,6 +1,12 @@
 var mo = require('moment');
 var pg = require('pg');
-pg = new pg.Pool();
+require('dotenv').config();
+if (!process.env.DEVELOPMENT) pg.defaults.ssl = true;
+
+// pg = new pg.Pool();
+var connect = function (cb) {
+  return pg.connect(process.env.DATABASE_URL, cb);
+};
 
 const SELECT = 'SELECT posts.year, posts.month, posts.date, name, body, question FROM posts';
 module.exports = {
@@ -14,8 +20,8 @@ module.exports = {
       'LIMIT ' + limit
     ].join(' ') + ';';
     return new Promise((resolve, reject) => {
-      pg.connect((err, client, done) => {
-        if (err) reject(err);
+      connect((err, client, done) => {
+        if (err) { console.log(err); reject(err);}
         client.query(query, (err, res) => {
           if (err) reject(err);
           resolve(res.rows);
@@ -55,7 +61,7 @@ module.exports = {
     if (account !== false) values.push(account);
 
     return new Promise((resolve, reject) => {
-      pg.connect((err, client, done) => {
+      connect((err, client, done) => {
         if (err) reject(err);
         client.query(query, values, (err, res) => {
           if (err) reject(err);
@@ -75,7 +81,7 @@ module.exports = {
     var values = [data.user, data.post, now.year(), now.month(), now.date()];
 
     return new Promise((resolve, reject) => {
-      pg.connect((err, client, done) => {
+      connect((err, client, done) => {
         if (err) reject(err);
         client.query(query, values, (err, result) => {
           if (err) reject(err);
