@@ -1,9 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+require('dotenv').config();
 const app = express();
-app.use(morgan('dev'));
+if (!process.env.DEVELOPMENT) app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static('dist'));
 
