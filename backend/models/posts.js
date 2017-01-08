@@ -21,7 +21,7 @@ module.exports = {
     ].join(' ') + ';';
     return new Promise((resolve, reject) => {
       connect((err, client, done) => {
-        if (err) { console.log(err); reject(err);}
+        if (err) { console.log(err); reject(err); }
         client.query(query, (err, res) => {
           if (err) reject(err);
           resolve(res.rows);
