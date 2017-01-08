@@ -1,5 +1,7 @@
 INSERT INTO posts (body, account_id, year, month, date)
 VALUES
+('Steven generously let me (made me) wear a pair of his new socks so I could experience their extreme cushyness. We also watched Gilmore girls sitting next to our little Christmas tree, which we are still enjoying.', 1, 2017, 0, 5),
+('I did a juice cleanse.  It was sort of weird but not that hard until Amy started frying an egg...', 2, 2017, 0, 5),
 ('Gray and rainy, but ending on a bright note (literal music, Friendship Park at Pianos bar)', 1, 2017, 0, 3),
 ('Got to work early, left work early, partied with Friendship Park. Trying to set new patterns and have more fun!', 2, 2017, 0, 3),
 ('Homemade chicken tikka, homemade fireball Oban, and working on projects in our little cozy apartment.', 1, 2017, 0, 2),

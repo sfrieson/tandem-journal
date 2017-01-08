@@ -13,7 +13,6 @@ module.exports = {
       'ORDER BY year DESC, month DESC, date DESC, name ASC',
       'LIMIT ' + limit
     ].join(' ') + ';';
-    console.log(query);
     return new Promise((resolve, reject) => {
       pg.connect((err, client, done) => {
         if (err) reject(err);
@@ -34,7 +33,6 @@ module.exports = {
     // var ago = mo().week(-num);
 
     return this.getAll(28, user);
-
   },
   getDate: function (date, account) {
     account = account || false;
@@ -48,7 +46,6 @@ module.exports = {
       account !== false ? 'AND account_id = $' + (++inputCount) : '',
       'ORDER BY year DESC, month DESC, date DESC, name ASC'
     ].join(' ') + ';';
-    console.log(query);
     var values = Object.keys(date)
     .reduce((values, key) => {
       values.push(date[key]);
@@ -57,14 +54,11 @@ module.exports = {
 
     if (account !== false) values.push(account);
 
-    console.log(query, values);
-
     return new Promise((resolve, reject) => {
       pg.connect((err, client, done) => {
         if (err) reject(err);
         client.query(query, values, (err, res) => {
           if (err) reject(err);
-          console.log(res);
           resolve(res.rows);
           done();
         });

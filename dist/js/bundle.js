@@ -26976,6 +26976,56 @@
 	      );
 	    }
 	  }, {
+	    key: 'renderPosts',
+	    value: function renderPosts(post, i) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: i },
+	        this.renderPost(post)
+	      );
+	    }
+	  }, {
+	    key: 'renderPost',
+	    value: function renderPost(post) {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'span',
+	          { style: { fontSize: '.8em' } },
+	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
+	          ':'
+	        ),
+	        ' ',
+	        _react2.default.createElement(
+	          'b',
+	          null,
+	          post.name
+	        ),
+	        ' - ',
+	        post.body
+	      );
+	    }
+	  }, {
+	    key: 'renderRecent',
+	    value: function renderRecent() {
+	      if (!this.state.recent) return null;
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Recent'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { style: { textAlign: 'left' } },
+	          this.renderByDate(this.state.recent)
+	        )
+	      );
+	    }
+	  }, {
 	    key: 'renderPastYears',
 	    value: function renderPastYears() {
 	      if (!this.state.years) return null;
@@ -26996,46 +27046,88 @@
 	      );
 	    }
 	  }, {
-	    key: 'renderRecent',
-	    value: function renderRecent() {
-	      if (!this.state.recent) return null;
-	      var posts = this.state.recent.map(this.renderPost);
+	    key: 'renderByDate',
+	    value: function renderByDate(posts) {
+	      var organized = this.parseDates(posts);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Past Weeks'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { style: { textAlign: 'left' } },
-	          posts
-	        )
+	        this.byDateYear(Object.keys(organized), organized)
 	      );
 	    }
 	  }, {
-	    key: 'renderPost',
-	    value: function renderPost(post, i) {
-	      return _react2.default.createElement(
-	        'li',
-	        { key: i },
-	        _react2.default.createElement(
-	          'span',
-	          { style: { fontSize: '.8em' } },
-	          (0, _moment2.default)([post.year, post.month, post.date]).format('MMMM Do, YYYY'),
-	          ':'
-	        ),
-	        ' ',
-	        _react2.default.createElement(
-	          'b',
-	          null,
-	          post.name
-	        ),
-	        ' - ',
-	        post.body
-	      );
+	    key: 'byDateYear',
+	    value: function byDateYear(years, obj) {
+	      var _this2 = this;
+
+	      if (years.length > 1) {
+	        return years.map(function (year) {
+	          var yearObj = obj[year];
+	          return _react2.default.createElement(
+	            'div',
+	            { key: 'year-' + year },
+	            ' ',
+	            year,
+	            _this2.byDateMonth(Object.keys(yearObj), yearObj)
+	          );
+	        });
+	      } else {
+	        var year = obj[years[0]];
+	        return this.byDateMonth(Object.keys(year), year);
+	      }
+	    }
+	  }, {
+	    key: 'byDateMonth',
+	    value: function byDateMonth(months, obj) {
+	      var _this3 = this;
+
+	      if (months.length > 1) {
+	        return months.map(function (month) {
+	          var monthObj = obj[month];
+	          return _react2.default.createElement(
+	            'div',
+	            { key: 'month-' + month },
+	            ' ',
+	            month,
+	            _this3.byDateDate(Object.keys(monthObj), monthObj)
+	          );
+	        });
+	      } else {
+	        var month = obj[months[0]];
+	        return this.byDateDate(Object.keys(month), month);
+	      }
+	    }
+	  }, {
+	    key: 'byDateDate',
+	    value: function byDateDate(dates, obj) {
+	      var _this4 = this;
+
+	      return dates.map(function (date) {
+	        var posts = obj[date];
+	        return posts.map(function (post) {
+	          return _react2.default.createElement(
+	            'div',
+	            { key: 'date-' + date + post.name },
+	            _this4.renderPost(post)
+	          );
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'parseDates',
+	    value: function parseDates(arr) {
+	      var dates = {};
+	      var year, month, date;
+	      arr.forEach(function (post) {
+	        dates[post.year] = dates[post.year] || {};
+	        year = dates[post.year];
+	        year[post.month] = year[post.month] || {};
+	        month = year[post.month];
+	        month[post.date] = month[post.date] || [];
+	        date = month[post.date];
+	        date.push(post);
+	      });
+	      return dates;
 	    }
 	  }]);
 
