@@ -1,4 +1,5 @@
-/* global fetch Headers */
+/* global Headers */
+var fetch = require('node-fetch');
 
 module.exports = {
   get: function (url) {

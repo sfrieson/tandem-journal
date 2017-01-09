@@ -4,7 +4,7 @@ import Posts from '../stores/posts.jsx';
 import {Link} from 'react-router';
 import mo from 'moment';
 
-module.exports = class App extends React.Component {
+module.exports = class Home extends React.Component {
   constructor () {
     super();
     this.state = {years: false};
@@ -78,7 +78,7 @@ module.exports = class App extends React.Component {
   byDateYear (years, obj) {
     if (years.length > 1) {
       return years.map(year => {
-        var yearObj = obj[year]
+        var yearObj = obj[year];
         return (
           <div key={'year-' + year}> {year}
             {this.byDateMonth(Object.keys(yearObj), yearObj)}
