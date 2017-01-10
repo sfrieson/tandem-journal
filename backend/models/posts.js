@@ -4,7 +4,8 @@ require('dotenv').config();
 if (!process.env.DEVELOPMENT) pg.defaults.ssl = true;
 
 // pg = new pg.Pool();
-var connect = function (cb) {
+var connect = process.env.DEVELOPMENT ? pg.connect.bind(pg)
+: function (cb) {
   return pg.connect(process.env.DATABASE_URL, cb);
 };
 
@@ -21,12 +22,19 @@ module.exports = {
     ].join(' ') + ';';
     return new Promise((resolve, reject) => {
       connect((err, client, done) => {
-        if (err) { console.log(err); reject(err); }
-        client.query(query, (err, res) => {
-          if (err) reject(err);
-          resolve(res.rows);
+        if (err) {
+          reject(err);
           done();
-        });
+        } else {
+          client.query(query, (err, res) => {
+            if (err) {
+              return reject(err);
+              done();
+            }
+            resolve(res.rows);
+            done();
+          });
+        }
       });
     });
   },
@@ -59,12 +67,14 @@ module.exports = {
     }, []);
 
     if (account !== false) values.push(account);
-
     return new Promise((resolve, reject) => {
       connect((err, client, done) => {
-        if (err) reject(err);
-        client.query(query, values, (err, res) => {
-          if (err) reject(err);
+        if (err) {
+          reject(err);
+          done();
+        }
+        else client.query(query, values, (err, res) => {
+          if (err) return reject(err);
           resolve(res.rows);
           done();
         });
@@ -82,9 +92,12 @@ module.exports = {
 
     return new Promise((resolve, reject) => {
       connect((err, client, done) => {
-        if (err) reject(err);
-        client.query(query, values, (err, result) => {
-          if (err) reject(err);
+        if (err) {
+          reject(err);
+          done();
+        }
+        else client.query(query, values, (err, result) => {
+          if (err) return reject(err);
           resolve(JSON.stringify(result.rows[0]));
           done();
         });

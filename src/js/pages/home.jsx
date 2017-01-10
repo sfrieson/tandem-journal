@@ -45,7 +45,7 @@ module.exports = class Home extends React.Component {
     );
   }
   renderPost (post) {
-    return <div><span style={{fontSize: '.8em'}}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}:</span> <b>{post.name}</b> - {post.body}</div>;
+    return <div><span style={{fontSize: '.8em'}}>{mo([post.year, post.month, post.date]).format('MMMM Do, YYYY')}:</span> <b>{post.name}</b> - {post.question} {post.body}</div>;
   }
   renderRecent () {
     if (!this.state.recent) return null;
